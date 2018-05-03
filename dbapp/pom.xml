@@ -21,6 +21,9 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Potřebujeme dvě závislosti: na konektor JDBC a knihovnu hibernate -->
+		
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>

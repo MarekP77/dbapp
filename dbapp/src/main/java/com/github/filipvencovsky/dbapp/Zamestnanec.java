@@ -1,11 +1,23 @@
 package com.github.filipvencovsky.dbapp;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+/**
+ * jednoduchá třída popisující zákaldní atributy zaměstnance
+ * 
+ * je nutné použít API pro persistenci a identifikovat třídu jako entitu, která je možným předmětem persistence
+ * dále je nutné, aby objekt měl jasný identifikátor, ten musíme označit anotací
+ *
+ */
+@Entity
 public class Zamestnanec {
 	private int id;
 	private String jmeno;
 	private String prijmeni;
 	private int plat;
 	
+	@Id
 	public int getId() {
 		return id;
 	}

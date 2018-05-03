@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<!-- session factory uvádíme záměrně bez atributu name -->
+	<session-factory>
+
+		<!-- Cesta k ovladači JDBC -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+
+		<!-- URI databáze ve formátu jdbc:typDB://adresa:port/názevDB -->
+		<property name="hibernate.connection.url">jdbc:mysql://172.17.0.1:3306/mojedb</property>
+
+		<!-- uživatelské jméno a heslo, POZOR není vhodné ukládat na veřejný GitHub, 
+			pokud je DB dostupná venku -->
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">mojeheslo</property>
+
+		<!-- určení dialektu, ve kterém se bude tvořit SQL, POZOR na rozdíl MYSQL 
+			a MYSQL5 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+		<!-- určí že se má tabulka vždy přepsat celá -->
+		<property name="hbm2ddl.auto">create</property>
+
+		<!-- nepovinné vlastnosti -->
+
+		<!-- vypisování dotazů do konzole pro kontrolu -->
+		<property name="show_sql">true</property>
+
+	</session-factory>
+</hibernate-configuration>
