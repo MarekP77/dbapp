@@ -21,9 +21,6 @@
 			a MYSQL5 -->
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
-		<!-- určí že se má tabulka vždy přepsat celá -->
-		<property name="hbm2ddl.auto">create</property>
-
 		<!-- nepovinné vlastnosti -->
 
 		<!-- vypisování dotazů do konzole pro kontrolu -->
