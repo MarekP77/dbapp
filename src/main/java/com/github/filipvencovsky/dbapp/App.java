@@ -9,39 +9,56 @@ import org.hibernate.cfg.Configuration;
  * Jednoduchá aplikace pro demonstraci objektově-relačního mapování
  *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-    	//vytvoření objektu pro uložení do DB
-    	Zamestnanec zam = new Zamestnanec();
-    	zam.setId(0);
-    	zam.setJmeno("Jan");
-    	zam.setPrijmeni("Novák");
-    	zam.setPlat(50000);
-    	
-    	//vytvoření prázdné konfigurace
-    	Configuration conf = new Configuration();
-    	
-    	//načtení konfiguračního souboru hibernate.cfg.xml, při defaultním jménu se nemusí nic uvádět
-    	conf.configure();
-    	
-    	//načtení anotací z třídy
-    	conf.addAnnotatedClass(Zamestnanec.class);
- 
-    	//získání odkazu na budoucí databázovou relaci, předá nám ji konfigurační objekt, který jsme předtím vytvořili
-    	SessionFactory sf = conf.buildSessionFactory();
-    	
-    	//otevření databázové relace
-    	Session ses = sf.openSession();
-    	
-    	//otevření transakce
-    	Transaction tx = ses.beginTransaction();
-    	
-    	//uložení stavu objektu
-    	ses.save(zam);
-    	
-    	//odeslání transakce
-    	tx.commit();
-    }
+public class App {
+	public static void main(String[] args) throws Exception {
+		// vytvoření objektu pro uložení do DB
+		Zamestnanec zam = new Zamestnanec();
+		zam.setId(0);
+		zam.setJmeno("Jan");
+		zam.setPrijmeni("Novák");
+		zam.setPlat(50000);
+
+		// vytvoření prázdné konfigurace
+		Configuration conf = new Configuration();
+
+		// načtení konfiguračního souboru hibernate.cfg.xml, při defaultním jménu se
+		// nemusí nic uvádět
+		conf.configure();
+
+		// načtení anotací z třídy
+		conf.addAnnotatedClass(Zamestnanec.class);
+
+		// získání odkazu na budoucí databázovou relaci, předá nám ji konfigurační
+		// objekt, který jsme předtím vytvořili
+		SessionFactory factory = conf.buildSessionFactory();
+
+		// otevření databázové relace
+		Session ses = factory.openSession();
+		Transaction tx = null;
+		try {
+
+			// otevření transakce
+			tx = ses.beginTransaction();
+
+			// uložení stavu objektu
+			ses.save(zam);
+
+			// odeslání transakce
+			tx.commit();
+		} catch (Exception e) {
+			// rollback při problému
+			if (tx != null)
+				tx.rollback();
+			throw e;
+		} finally {
+			// ukončení databázové relace po všech požadovaných operacích s DB, úklid pod
+			// připojení
+			ses.close();
+		}
+
+		// ukončení běžící instance, která vrací databázové relace - jinak program
+		// neskončí
+		factory.close();
+
+	}
 }
